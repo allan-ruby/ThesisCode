@@ -115,7 +115,7 @@ def Join_Mummichog_Results_Retention_Times(filedir):
     #col2 = results.columns
     #final_columns = col1+ col2
     for index,row in id_df.iterrows():
-        print('On {} of {}'.format(index + 1,len(id_df)))
+        # print('On {} of {}'.format(index + 1,len(id_df)))
         for index,result_row in results.iterrows():
             threshold = .1
             low = float(row['mzmed'] - threshold)
@@ -190,9 +190,9 @@ def Join_Mummichog_Matches_Molecular_Features(result_df,file_dir):
         #        descdf = pd.DataFrame(descdf, index=[index])
                 interdf = pd.concat([descdf,newdf],axis=1)
                 finaldf = finaldf.append(interdf)
-            else:
-                print('cmpd already queried')
-            print('on index ' + str(index+1) + ' of ' + str(len(result_df)))
+            # else:
+                # print('cmpd already queried')
+            # print('on index ' + str(index+1) + ' of ' + str(len(result_df)))
     
     finaldf.to_pickle(file_dir + 'RT_Folder\\mummichog_rt_features.p')
     return finaldf
@@ -253,7 +253,7 @@ def Run_Model_On_Punitive_Matches(mol_characteristics,rt_file,model_dir,file_dir
             list_of_approved_cmpds.append([test_name,beginning_range,end_range,actual_rt])
         elif not beginning_range < actual_rt < end_range and test_name not in list_of_unapproved_cmpds:
             list_of_unapproved_cmpds.append([test_name,beginning_range,end_range,actual_rt])
-        print('Start range of RT is {} and end range of RT is {} for {}'.format(beginning_range,end_range,test_name))    
+        # print('Start range of RT is {} and end range of RT is {} for {}'.format(beginning_range,end_range,test_name))    
     total = len(list_of_approved_cmpds) + len(list_of_unapproved_cmpds) + len(list_of_unsure_cmpds)
     print('False positves removed {}, perventage is {}'.format(len(list_of_unapproved_cmpds),(len(list_of_unapproved_cmpds)/total) * 100))
     write_list_to_csv(list_of_approved_cmpds,file_dir + 'RT_Folder\\approved.csv')
@@ -264,11 +264,13 @@ def Run_Model_On_Punitive_Matches(mol_characteristics,rt_file,model_dir,file_dir
 def One_Click_Program(file_dir,template_rt_file_dir,model_dir):
     startTime = datetime.now()
     mummichog_with_rts = Join_Mummichog_Results_Retention_Times(file_dir)
+    time1 = datetime.now()
     print('To Process mummichog and unite them with Retention Times took {}'.format(datetime.now() - startTime))
     mummichog_with_rts_mol_features = Join_Mummichog_Matches_Molecular_Features(mummichog_with_rts,file_dir)
-    print('To get all molecular features for the matches took {}'.format(datetime.now() - startTime))
+    time2 = datetime.now()
+    print('To get all molecular features for the matches took {}'.format(datetime.now() - time1))
     approved,unapproved,unsure = Run_Model_On_Punitive_Matches(mummichog_with_rts_mol_features,template_rt_file_dir,model_dir,file_dir)
-    print('To run model took {}'.format(datetime.now() - startTime))
+    print('To run model took {}'.format(datetime.now() - time2))
     
 def xl_hello_world():
     wb = xw.Book('Interface.xlsm')
