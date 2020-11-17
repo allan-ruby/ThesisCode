@@ -1,11 +1,11 @@
 import pandas as pd
 from PredRetDatabaseProcessor import fps_plus_mw, mol_prop_gen
 
-Pred_Ret_DF = pd.read_csv('PredRetDB.csv')
+Pred_Ret_DF = pd.read_csv(r'C:\Users\rubya\Desktop\Forsberg Lab\MainThesisFolderRTPred\csvfiles\PredRetDB.csv')
 
-phase_type_df = pd.read_csv('PredRetsystemtocoltype.csv')
+phase_type_df = pd.read_csv(r'C:\Users\rubya\Desktop\Forsberg Lab\MainThesisFolderRTPred\csvfiles\PredRetsystemtocoltype.csv')
 
-col_parameters = pd.read_csv('column_parameters.csv')
+col_parameters = pd.read_csv(r'C:\Users\rubya\Desktop\Forsberg Lab\MainThesisFolderRTPred\csvfiles\column_parameters.csv')
 col_dict = {}
 
 for indx,row in col_parameters.iterrows():
